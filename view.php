@@ -3,6 +3,7 @@
 function render_view($template,$messages = []){
     $content = load_content($template,$messages);
     echo $content;
+    exit;
 }
 
 function load_content($template,$messages){

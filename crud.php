@@ -7,6 +7,7 @@ function crud_load(){
 }
 
 function crud_flush($data){
+    $data = array_values($data);
     $data = json_encode($data);
     file_put_contents(DATA_LOCATION,$data);
 }

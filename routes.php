@@ -6,6 +6,12 @@ function guest_routes(){
         case 'login':
             do_login();
         break;
+        case 'forget-password':
+            do_forget_password();
+        break;
+        case 'change-password':
+            do_change_password();
+        break;
         case 'register':
             do_register();
         break;
