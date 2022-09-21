@@ -73,8 +73,21 @@ function do_validation(){
 
 }
 
+function do_logout(){
+    auth_logout();
+    header("Location: /");
+}
+
+function do_delete_account(){
+    $user = auth_user();
+    crud_delete($user);
+    do_logout();
+}
+
 function do_home(){
-    render_view('home');
+    $messages = [];
+    $messages['fields'] = auth_user();
+    render_view('home',$messages);
 }
 
 function do_validation_success($email){

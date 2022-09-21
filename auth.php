@@ -16,3 +16,7 @@ function authentication($email, $password){
 function auth_user(){
     return json_decode($_SESSION['user']);
 }
+
+function auth_logout(){
+    unset($_SESSION['user']);
+}

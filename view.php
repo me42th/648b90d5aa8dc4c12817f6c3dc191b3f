@@ -7,12 +7,32 @@ function render_view($template,$messages = []){
 
 function load_content($template,$messages){
     $validation_errors = $messages['errors']??[];
+    $fields = $messages['fields']??'';
     $success_msg = $messages['success']??'';
     $content = file_get_contents(VIEW_FOLDER."$template.view");
     $content = put_error_data($content,$validation_errors);
     $content = put_success_msg($content,$success_msg);
     $content = put_old_values($content);
+    $content = put_field_values($content,$fields);
     return $content;
+}
+
+function put_field_values($content,$fields){
+    $field_places = get_field_places($content);
+    $field_values = prepare_field_values($fields,$field_places);
+    $content = data_binding($content,$field_values);
+    return $content;
+}
+
+function prepare_field_values($fields,$field_places){
+    $field_values = [];
+    foreach ($field_places as $place){
+        $field = str_replace('{{field_','',$place);
+        $field = str_replace('}}','',$field);
+        $field = str_replace('_','-',$field);
+        $field_values[$place] = $fields->{$field}??'';
+    }
+    return $field_values;
 }
 
 function put_success_msg($content,$success_msg){
@@ -27,6 +47,7 @@ function put_old_values($content){
     $content = data_binding($content,$values);
     return $content;
 }
+
 
 function prepare_old_values($value_places){
     $values = [];
@@ -82,6 +103,10 @@ function get_sucess_places($content){
 
 function get_error_places($content){
     return get_place_of('error', $content);
+}
+
+function get_field_places($content){
+    return get_place_of('field', $content);
 }
 
 function get_value_places($content){

@@ -37,3 +37,14 @@ function crud_update($user){
     }
     crud_flush($data);
 }
+
+function crud_delete($user){
+    $data = crud_load();
+    foreach($data as $key => $item){
+        if($item->email === $user->email){
+            unset($data[$key]);
+            break;
+        }
+    }
+    crud_flush($data);
+}

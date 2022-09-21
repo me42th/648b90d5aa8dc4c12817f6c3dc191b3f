@@ -24,6 +24,12 @@ function auth_routes(){
         case 'home':
             do_home();
         break;
+        case 'logout':
+            do_logout();
+        break;
+        case 'delete-account':
+            do_delete_account();
+        break;
         default:
             do_not_found();
         break;
